@@ -139,6 +139,10 @@ def predict():
     word = request.json['word'].lower()
     audio_file = np.array(request.json['audio'])
 
+    # Check if file is empty
+    if max(audio_file) < 0.02:
+        return {'Status':'Empty_File', 'Prediction': -1}
+
     if word not in WORD_MAP:
         return {'Status':'Failed', 'Error': f'Word not found in the model map: {word}'}, 400
 
